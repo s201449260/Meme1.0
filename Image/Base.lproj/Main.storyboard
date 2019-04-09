@@ -35,15 +35,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p4W-9f-Ya0">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="pTx-06-Vro">
-                                <rect key="frame" x="101" y="483" width="173" height="47"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-NC-YXn">
+                                <rect key="frame" x="145.5" y="148" width="84" height="47"/>
+                                <color key="tintColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-NC-YXn">
-                                <rect key="frame" x="145.5" y="177" width="84" height="47"/>
-                                <color key="tintColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="pTx-06-Vro">
+                                <rect key="frame" x="101" y="516" width="173" height="47"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -51,14 +51,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="pTx-06-Vro" firstAttribute="top" secondItem="p4W-9f-Ya0" secondAttribute="bottom" constant="-107" id="3aL-WD-Prc"/>
+                            <constraint firstItem="p4W-9f-Ya0" firstAttribute="top" secondItem="pYa-NC-YXn" secondAttribute="bottom" constant="-131" id="7ry-F4-tya"/>
                             <constraint firstItem="p4W-9f-Ya0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BCo-fH-FoS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WqX-se-7cB" secondAttribute="trailing" id="Oza-Zm-PeE"/>
                             <constraint firstItem="pYa-NC-YXn" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ph5-sK-gmM"/>
                             <constraint firstItem="pTx-06-Vro" firstAttribute="centerX" secondItem="p4W-9f-Ya0" secondAttribute="centerX" id="X6I-Ru-l0e"/>
-                            <constraint firstItem="WqX-se-7cB" firstAttribute="top" secondItem="pTx-06-Vro" secondAttribute="bottom" constant="93" id="bje-cd-rcw"/>
                             <constraint firstItem="p4W-9f-Ya0" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ey0-dT-IWr"/>
                             <constraint firstItem="WqX-se-7cB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="h5c-0X-vMC"/>
-                            <constraint firstItem="pYa-NC-YXn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="113" id="lQ7-SB-OG7"/>
                             <constraint firstItem="p4W-9f-Ya0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nHw-18-hRy"/>
                             <constraint firstItem="WqX-se-7cB" firstAttribute="top" secondItem="p4W-9f-Ya0" secondAttribute="bottom" id="rGe-jJ-aBn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="p4W-9f-Ya0" secondAttribute="trailing" id="tdT-CH-5Sw"/>
