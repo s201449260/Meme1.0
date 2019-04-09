@@ -130,7 +130,7 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     func unsubscribeFromKeyboardNotifications(){
         
-//        NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardDidHideNotification, object: nil)
+
          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
@@ -184,7 +184,7 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     func imagePickerControllerDidCancel(_ picker:
         
         UIImagePickerController) {
-        print("picker is cancled here")
+       
          picker.dismiss(animated: true, completion: nil)
     }
     
@@ -209,9 +209,9 @@ UINavigationControllerDelegate, UITextFieldDelegate{
             let items : [Any] = ["This is my profile info", image]
             let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
             present(ac, animated: true)
-            print("Share button success")
+          
         }
-        print("Share button clicked")
+       
 
        
         
