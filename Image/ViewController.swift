@@ -11,7 +11,9 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate{
     
-   
+    var isUsingBottomDefaultText:Bool = true
+    var isUsingTopDefaultText:Bool = true
+
     
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.black,
@@ -35,23 +37,36 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var cameraBtn: UIBarButtonItem!
     
+    var btnShare: UIBarButtonItem?
+    
+    
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //
 //
-        self.topTxt.defaultTextAttributes = memeTextAttributes
-        self.bottomTxt.defaultTextAttributes = memeTextAttributes
-        self.topTxt.delegate = self
-        self.bottomTxt.delegate = self
+       
+        configureMemeTextField(textField: self.topTxt, text: self.topTxt.text ?? "TOP")
+        configureMemeTextField(textField: self.bottomTxt, text: self.bottomTxt.text ?? "BOTTOM")
         
 
        
         
-        let btnShare = UIBarButtonItem(barButtonSystemItem:.action, target: self, action: #selector(shareFunction))
-        self.navigationItem.leftBarButtonItem = btnShare
+
 
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func configureMemeTextField(textField: UITextField, text: String) {
+        textField.text = text
+         textField.adjustsFontSizeToFitWidth = true
+        textField.delegate = self
+        textField.minimumFontSize = 1.0
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
     }
     
     
@@ -61,13 +76,22 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         self.topTxt.text = "TOP"
         self.bottomTxt.text = "BOTTOM"
          imagePickerView.image = nil
-        
-        
+        self.btnShare = nil
+        self.navigationItem.leftBarButtonItem = nil
+      
     }
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+        if textField == bottomTxt && isUsingBottomDefaultText {
+            textField.text = ""
+            isUsingBottomDefaultText = false
+        }
+        
+        if textField == topTxt && isUsingTopDefaultText {
+            textField.text = ""
+            isUsingTopDefaultText = false
+        }
     }
     
     
@@ -80,25 +104,27 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     
     
+    func pickAnImage(sourceType: UIImagePickerController.SourceType) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = sourceType
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
     
     
     @IBAction func pickAlbumImage(_ sender: UIBarButtonItem) {
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+        pickAnImage(sourceType: .photoLibrary)
+        
+        
+      
     }
     
     @IBAction func pickCameraImage(_ sender: Any) {
         
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        
-        present(imagePicker, animated: true, completion: nil)
-        
+        pickAnImage(sourceType: .camera)
+
         
     }
     
@@ -126,18 +152,24 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     func subscribeToKeyBoardNotifications(){
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        
     }
     
     func unsubscribeFromKeyboardNotifications(){
         
 
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+
         
     }
     
     
     @objc func keyboardWillShow(_ notification : Notification) {
-        if   view.frame.origin.y == 0 {
+        if   bottomTxt.isFirstResponder {
              view.frame.origin.y -= getKeyboardHeight(notification)
             
         }
@@ -194,8 +226,11 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickerView.image = image
+            imagePickerView.contentMode = .scaleToFill
             
         }
+         self.btnShare = UIBarButtonItem(barButtonSystemItem:.action, target: self, action: #selector(shareFunction))
+        self.navigationItem.leftBarButtonItem = btnShare
         
          picker.dismiss(animated: true, completion: nil)
         
