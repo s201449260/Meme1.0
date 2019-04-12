@@ -13,25 +13,22 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     var isUsingBottomDefaultText:Bool = true
     var isUsingTopDefaultText:Bool = true
-
+    
     
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.black,
         NSAttributedString.Key.foregroundColor: UIColor.white ,
-//
         NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedString.Key.strokeWidth: -5.0
-       
+        
     ]
     
-//    yourTextField.defaultTextAttributes = memeTextAttributes
-
+    
     @IBOutlet weak var btnCancel: UIBarButtonItem!
     
     @IBOutlet weak var topTxt: UITextField!
     
     @IBOutlet weak var bottomTxt: UITextField!
-    
     
     @IBOutlet weak var imagePickerView: UIImageView!
     
@@ -46,23 +43,15 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//
-       
+        
         configureMemeTextField(textField: self.topTxt, text: self.topTxt.text ?? "TOP")
         configureMemeTextField(textField: self.bottomTxt, text: self.bottomTxt.text ?? "BOTTOM")
         
-
-       
-        
-
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     func configureMemeTextField(textField: UITextField, text: String) {
         textField.text = text
-         textField.adjustsFontSizeToFitWidth = true
+        textField.adjustsFontSizeToFitWidth = true
         textField.delegate = self
         textField.minimumFontSize = 1.0
         textField.defaultTextAttributes = memeTextAttributes
@@ -75,10 +64,10 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         
         self.topTxt.text = "TOP"
         self.bottomTxt.text = "BOTTOM"
-         imagePickerView.image = nil
+        imagePickerView.image = nil
         self.btnShare = nil
         self.navigationItem.leftBarButtonItem = nil
-      
+        
     }
     
     
@@ -96,9 +85,9 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+        
         self.view.endEditing(true)
-
+        
         return true
     }
     
@@ -118,13 +107,13 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         pickAnImage(sourceType: .photoLibrary)
         
         
-      
+        
     }
     
     @IBAction func pickCameraImage(_ sender: Any) {
         
         pickAnImage(sourceType: .camera)
-
+        
         
     }
     
@@ -137,7 +126,7 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         
         cameraBtn.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         subscribeToKeyBoardNotifications()
-
+        
         
         
     }
@@ -153,35 +142,35 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         
     }
     
     func unsubscribeFromKeyboardNotifications(){
         
-
+        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        
         
     }
     
     
     @objc func keyboardWillShow(_ notification : Notification) {
         if   bottomTxt.isFirstResponder {
-             view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y -= getKeyboardHeight(notification)
             
         }
-       
+        
     }
     
     
     @objc func keyboardWillHide(_ notification : Notification) {
         if view.frame.origin.y != 0{
-             view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
-       
+        
     }
     
     
@@ -195,18 +184,10 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     
     func generateMemedImage() -> UIImage {
         
-         // TODO: Hide toolbar and navbar
-        
-        // Render view to an image
-
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame,  afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
-        // TODO: Show toolbar and navbar
-
-        
         
         return memedImage
         
@@ -216,8 +197,8 @@ UINavigationControllerDelegate, UITextFieldDelegate{
     func imagePickerControllerDidCancel(_ picker:
         
         UIImagePickerController) {
-       
-         picker.dismiss(animated: true, completion: nil)
+        
+        picker.dismiss(animated: true, completion: nil)
     }
     
     
@@ -226,15 +207,14 @@ UINavigationControllerDelegate, UITextFieldDelegate{
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickerView.image = image
-            imagePickerView.contentMode = .scaleToFill
             
         }
-         self.btnShare = UIBarButtonItem(barButtonSystemItem:.action, target: self, action: #selector(shareFunction))
+        self.btnShare = UIBarButtonItem(barButtonSystemItem:.action, target: self, action: #selector(shareFunction))
         self.navigationItem.leftBarButtonItem = btnShare
         
-         picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
         
-       
+        
         
     }
     
@@ -244,15 +224,15 @@ UINavigationControllerDelegate, UITextFieldDelegate{
             let items : [Any] = ["This is my profile info", image]
             let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
             present(ac, animated: true)
-          
+            
         }
-       
-
-       
+        
+        
+        
         
     }
-
-
+    
+    
 }
 
 
